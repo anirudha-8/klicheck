@@ -1,21 +1,25 @@
-import { Button } from "@/components/ui/button";
-import { Command, CommandInput } from "@/components/ui/command";
 import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./layouts/Layout";
+import { ThemeProvider } from "./contexts/theme-provider";
+import WeatherDashboardPage from "./pages/WeatherDashboardPage";
+import CityPage from "./pages/CityPage";
 
 function App() {
-	return (
-		<div className="p-2">
-			<h1 className="text-3xl font-extrabold">
-				klicheck - An Advanced Weather Forecast Application
-			</h1>
-			<div className="flex gap-2 mt-2">
-				<Command className="max-w-sm rounded-lg border">
-					<CommandInput placeholder="Type a city to know weather..." />
-				</Command>
-				<Button variant={"destructive"}>Check</Button>
-			</div>
-		</div>
-	);
+  return (
+    <div className="p-2">
+      <BrowserRouter>
+        <ThemeProvider>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<WeatherDashboardPage />} />
+              <Route path="/city/:cityName" element={<CityPage />} />
+            </Routes>
+          </Layout>
+        </ThemeProvider>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;
