@@ -12,4 +12,4 @@ class WeatherAPI {
   async searchLocations() {}
 }
 
-const weatherAPI = new WeatherAPI();
+export const weatherAPI = new WeatherAPI();
