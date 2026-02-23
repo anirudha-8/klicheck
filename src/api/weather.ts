@@ -11,3 +11,5 @@ class WeatherAPI {
 
   async searchLocations() {}
 }
+
+const weatherAPI = new WeatherAPI();
