@@ -10,7 +10,15 @@ class WeatherAPI {
     return `${endpoint}?${searchParams.toString()}`;
   }
 
-  private async fetchData() {}
+  private async fetchData<T>(url: string): Promise<T> {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Weather API Error: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
 
   async getCurrentWeather() {}
 
