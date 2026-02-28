@@ -12,6 +12,13 @@ const WeatherDashboardPage = () => {
     isLoading: locationLoading,
   } = useGeoLocation();
 
+  const handleRefresh = () => {
+    getLocation();
+    if (coordinates) {
+      // reload weather data
+    }
+  };
+
   return <div></div>;
 };
 
