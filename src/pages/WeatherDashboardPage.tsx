@@ -19,6 +19,10 @@ const WeatherDashboardPage = () => {
     }
   };
 
+  if (locationLoading) {
+    return <WeatherSkeleton />;
+  }
+
   return <div></div>;
 };
 
