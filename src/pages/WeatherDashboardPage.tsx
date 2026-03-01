@@ -35,6 +35,20 @@ const WeatherDashboardPage = () => {
     );
   }
 
+  if (!coordinates) {
+    return (
+      <Alert variant={"destructive"}>
+        <AlertTitle>Location Required</AlertTitle>
+        <AlertDescription>
+          <Button onClick={getLocation}>
+            <MapPin className="mr-2 h-4 w-4" />
+            Retry Location
+          </Button>
+        </AlertDescription>
+      </Alert>
+    );
+  }
+
   return <div></div>;
 };
 
