@@ -23,6 +23,18 @@ const WeatherDashboardPage = () => {
     return <WeatherSkeleton />;
   }
 
+  if (locationError) {
+    return (
+      <Alert variant={"destructive"}>
+        <AlertTriangle className="h-4 w-4" />
+        <AlertTitle>Location Error</AlertTitle>
+        <AlertDescription>
+          <p>{locationError}</p>
+        </AlertDescription>
+      </Alert>
+    );
+  }
+
   return <div></div>;
 };
 
