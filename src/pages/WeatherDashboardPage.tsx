@@ -4,6 +4,20 @@ import WeatherSkeleton from "@/components/WeatherSkeleton";
 import { useGeoLocation } from "@/hooks/useGeoLocation";
 import { AlertTriangle, MapPin, RefreshCw } from "lucide-react";
 
+/**
+ * WeatherDashboardPage Component
+ *
+ * Purpose:
+ * - Displays weather information based on user's geolocation.
+ * - Handles loading, error, and missing location states gracefully.
+ * - Provides retry and refresh functionality for location retrieval.
+ *
+ * Flow:
+ * 1. Attempt to fetch geolocation via `useGeoLocation`.
+ * 2. Show skeleton loader while fetching.
+ * 3. Show error alerts if location fails or is unavailable.
+ * 4. Render dashboard UI once coordinates are available.
+ */
 const WeatherDashboardPage = () => {
   const {
     coordinates,
@@ -12,19 +26,26 @@ const WeatherDashboardPage = () => {
     isLoading: locationLoading,
   } = useGeoLocation();
 
-  console.log(coordinates);
+  console.log(coordinates); // Debug: remove or replace with proper logging in production
 
+  /**
+   * Refresh handler:
+   * - Re-triggers location fetch
+   * - Intended to reload weather data once coordinates are available
+   */
   const handleRefresh = () => {
     getLocation();
     if (coordinates) {
-      // reload weather data
+      // TODO: reload weather data using coordinates
     }
   };
 
+  // Show skeleton loader while location is being fetched
   if (locationLoading) {
     return <WeatherSkeleton />;
   }
 
+  // Show error alert if geolocation fails
   if (locationError) {
     return (
       <Alert variant={"destructive"}>
@@ -49,6 +70,7 @@ const WeatherDashboardPage = () => {
     );
   }
 
+  // Show alert if no coordinates are available (e.g., initial failure)
   if (!coordinates) {
     return (
       <Alert variant={"destructive"}>
@@ -72,22 +94,23 @@ const WeatherDashboardPage = () => {
     );
   }
 
+  // Main dashboard UI once location is available
   return (
     <div className="space-y-4">
-      {/* Favorite Cities */}
+      {/* Header: My Location + Refresh button */}
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold tracking-tight">My Location</h1>
         <Button
           variant={"outline"}
           size={"icon"}
           onClick={handleRefresh}
-          // disabled={}
+          // TODO: consider disabling while loading
         >
           <RefreshCw className="h-4 w-4" />
         </Button>
       </div>
 
-      {/* Current and Hourly Weather */}
+      {/* Current and Hourly Weather (to be implemented) */}
     </div>
   );
 };
