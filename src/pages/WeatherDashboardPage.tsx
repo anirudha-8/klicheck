@@ -12,6 +12,8 @@ const WeatherDashboardPage = () => {
     isLoading: locationLoading,
   } = useGeoLocation();
 
+  console.log(coordinates);
+
   const handleRefresh = () => {
     getLocation();
     if (coordinates) {
@@ -28,8 +30,20 @@ const WeatherDashboardPage = () => {
       <Alert variant={"destructive"}>
         <AlertTriangle className="h-4 w-4" />
         <AlertTitle>Location Error</AlertTitle>
-        <AlertDescription>
+        <AlertDescription className="flex flex-col gap-4">
           <p>{locationError}</p>
+          <div className="text-sm text-muted-foreground">
+            If permission was denied, please enable location access in your
+            browser settings.
+          </div>
+          <Button
+            onClick={getLocation}
+            variant={"outline"}
+            className="w-fit cursor-pointer"
+          >
+            <MapPin className="mr-2 h-4 w-4" />
+            Retry Location
+          </Button>
         </AlertDescription>
       </Alert>
     );
@@ -39,8 +53,17 @@ const WeatherDashboardPage = () => {
     return (
       <Alert variant={"destructive"}>
         <AlertTitle>Location Required</AlertTitle>
-        <AlertDescription>
-          <Button onClick={getLocation}>
+        <AlertDescription className="flex flex-col gap-4">
+          <p>{locationError}</p>
+          <div className="text-sm text-muted-foreground">
+            If permission was denied, please enable location access in your
+            browser settings.
+          </div>
+          <Button
+            onClick={getLocation}
+            variant={"outline"}
+            className="w-fit cursor-pointer"
+          >
             <MapPin className="mr-2 h-4 w-4" />
             Retry Location
           </Button>
@@ -49,7 +72,18 @@ const WeatherDashboardPage = () => {
     );
   }
 
-  return <div></div>;
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-bold tracking-tight">My Location</h1>
+        <Button variant={"outline"} size={"icon"} onClick={handleRefresh}>
+          <RefreshCw className="h-4 w-4" />
+        </Button>
+      </div>
+
+      {/* Current and Hourly Weather */}
+    </div>
+  );
 };
 
 export default WeatherDashboardPage;
