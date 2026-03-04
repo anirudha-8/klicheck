@@ -43,7 +43,9 @@ const WeatherDashboardPage = () => {
   const handleRefresh = () => {
     getLocation();
     if (coordinates) {
-      // refetch data
+      weatherQuery.refetch();
+      forecastQuery.refetch();
+      locationQuery.refetch();
     }
   };
 
