@@ -27,3 +27,13 @@ export function useForecastQuery(coordinates: Coordinates | null) {
     enabled: !!coordinates,
   });
 }
+
+// Query for reverse geo-coding to get name of the location using lat, lon
+export function useReverseGeocodeQuery(coordinates: Coordinates | null) {
+  return useQuery({
+    queryKey: WEATHER_KEYS.location(coordinates ?? { lat: 0, lon: 0 }),
+    queryFn: () =>
+      coordinates ? weatherAPI.reverseGeocode(coordinates) : null,
+    enabled: !!coordinates,
+  });
+}
