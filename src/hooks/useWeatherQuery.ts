@@ -17,3 +17,13 @@ export function useWeatherQuery(coordinates: Coordinates | null) {
     enabled: !!coordinates,
   });
 }
+
+// Query to get weather forecast
+export function useForecastQuery(coordinates: Coordinates | null) {
+  return useQuery({
+    // use the 'forecast' key so the cache is separate from current weather
+    queryKey: WEATHER_KEYS.forecast(coordinates ?? { lat: 0, lon: 0 }),
+    queryFn: () => (coordinates ? weatherAPI.getForecast(coordinates) : null),
+    enabled: !!coordinates,
+  });
+}
