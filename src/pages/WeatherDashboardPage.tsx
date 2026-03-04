@@ -105,6 +105,28 @@ const WeatherDashboardPage = () => {
     );
   }
 
+  if (weatherQuery.error || forecastQuery.error) {
+    return (
+      <Alert variant={"destructive"}>
+        <AlertTriangle className="h-4 w-4" />
+        <AlertTitle>Location Error</AlertTitle>
+        <AlertDescription className="flex flex-col gap-4">
+          <div className="text-sm text-muted-foreground">
+            Failed to fetch weather data. Please, try again!
+          </div>
+          <Button
+            onClick={handleRefresh}
+            variant={"outline"}
+            className="w-fit cursor-pointer"
+          >
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Retry
+          </Button>
+        </AlertDescription>
+      </Alert>
+    );
+  }
+
   // Main dashboard UI once location is available
   return (
     <div className="space-y-4">
