@@ -2,6 +2,11 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import WeatherSkeleton from "@/components/WeatherSkeleton";
 import { useGeoLocation } from "@/hooks/useGeoLocation";
+import {
+  useForecastQuery,
+  useReverseGeocodeQuery,
+  useWeatherQuery,
+} from "@/hooks/useWeatherQuery";
 import { AlertTriangle, MapPin, RefreshCw } from "lucide-react";
 
 /**
@@ -26,7 +31,9 @@ const WeatherDashboardPage = () => {
     isLoading: locationLoading,
   } = useGeoLocation();
 
-  console.log(coordinates); // Debug: remove or replace with proper logging in production
+  const weatherQuery = useWeatherQuery(coordinates);
+  const forecastQuery = useForecastQuery(coordinates);
+  const locationQuery = useReverseGeocodeQuery(coordinates);
 
   /**
    * Refresh handler:
@@ -36,7 +43,7 @@ const WeatherDashboardPage = () => {
   const handleRefresh = () => {
     getLocation();
     if (coordinates) {
-      // TODO: reload weather data using coordinates
+      // refetch data
     }
   };
 
@@ -71,12 +78,14 @@ const WeatherDashboardPage = () => {
   }
 
   // Show alert if no coordinates are available (e.g., initial failure)
+  // locationError is handled above; this branch catches a null result
+  // without a descriptive message.
   if (!coordinates) {
     return (
       <Alert variant={"destructive"}>
         <AlertTitle>Location Required</AlertTitle>
         <AlertDescription className="flex flex-col gap-4">
-          <p>{locationError}</p>
+          <p>{locationError ?? "Unable to determine your location."}</p>
           <div className="text-sm text-muted-foreground">
             If permission was denied, please enable location access in your
             browser settings.
@@ -100,13 +109,8 @@ const WeatherDashboardPage = () => {
       {/* Header: My Location + Refresh button */}
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold tracking-tight">My Location</h1>
-        <Button
-          variant={"outline"}
-          size={"icon"}
-          onClick={handleRefresh}
-          // TODO: consider disabling while loading
-        >
-          <RefreshCw className="h-4 w-4" />
+        <Button variant={"outline"} size={"icon"} onClick={handleRefresh}>
+          <RefreshCw className={`h-4 w-4`} />
         </Button>
       </div>
 
