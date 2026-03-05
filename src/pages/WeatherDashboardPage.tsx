@@ -131,12 +131,17 @@ const WeatherDashboardPage = () => {
     return <WeatherSkeleton />;
   }
 
+  // first result from reverse geocoding API (contains name, country, etc.)
+  const locationData = locationQuery.data?.[0];
+
   // Main dashboard UI once location is available
   return (
     <div className="space-y-4">
       {/* Header: My Location + Refresh button */}
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold tracking-tight">My Location</h1>
+        <h1 className="text-xl font-bold tracking-tight">
+          {locationData?.name ?? "My Location"}
+        </h1>
         <Button variant={"outline"} size={"icon"} onClick={handleRefresh}>
           <RefreshCw
             className={`h-4 w-4 ${weatherQuery.isFetching ? "animate-spin" : ""}`}
