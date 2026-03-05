@@ -138,7 +138,9 @@ const WeatherDashboardPage = () => {
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold tracking-tight">My Location</h1>
         <Button variant={"outline"} size={"icon"} onClick={handleRefresh}>
-          <RefreshCw className={`h-4 w-4`} />
+          <RefreshCw
+            className={`h-4 w-4 ${weatherQuery.isFetching ? "animate-spin" : ""}`}
+          />
         </Button>
       </div>
 
