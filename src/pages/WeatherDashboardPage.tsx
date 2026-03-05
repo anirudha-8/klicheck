@@ -127,6 +127,10 @@ const WeatherDashboardPage = () => {
     );
   }
 
+  if (!weatherQuery.data || !forecastQuery.data) {
+    return <WeatherSkeleton />;
+  }
+
   // Main dashboard UI once location is available
   return (
     <div className="space-y-4">
