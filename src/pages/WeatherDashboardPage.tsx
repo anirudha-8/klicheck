@@ -142,7 +142,12 @@ const WeatherDashboardPage = () => {
         <h1 className="text-xl font-bold tracking-tight">
           {locationData?.name ?? "My Location"}
         </h1>
-        <Button variant={"outline"} size={"icon"} onClick={handleRefresh}>
+        <Button
+          variant={"outline"}
+          size={"icon"}
+          onClick={handleRefresh}
+          disabled={weatherQuery.isFetching || forecastQuery.isFetching}
+        >
           <RefreshCw
             className={`h-4 w-4 ${weatherQuery.isFetching ? "animate-spin" : ""}`}
           />
